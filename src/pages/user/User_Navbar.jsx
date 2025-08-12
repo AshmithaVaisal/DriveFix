@@ -13,6 +13,8 @@ import {
   EyeOffIcon,
   ChatAltIcon,
   ChartBarIcon,
+  MenuIcon,
+  XIcon,
 } from "@heroicons/react/outline";
 
 const User_Navbar = () => {
@@ -22,6 +24,7 @@ const User_Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const notifications = [
     { id: 1, text: "Your oil change is confirmed", time: "2 hours ago" },
@@ -49,6 +52,7 @@ const User_Navbar = () => {
   const handleEditToggle = () => {
     setIsEditing(!isEditing);
   };
+
   const scrollToFooter = () => {
     if (window.location.pathname === "/") {
       const footer = document.getElementById("footer");
@@ -59,6 +63,7 @@ const User_Navbar = () => {
       navigate("/#footer");
     }
   };
+
   const scrollToTop = () => {
     if (window.location.pathname === "/") {
       const top = document.getElementById("top");
@@ -70,24 +75,41 @@ const User_Navbar = () => {
     }
   };
 
+  const handleMobileLinkClick = () => {
+    setMobileMenuOpen(false);
+  };
+
   return (
     <nav className="bg-black text-white shadow-lg sticky top-0 z-50 border-b border-gray-800">
       <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-        {/* Logo/Brand */}
-        <Link
-          to="/landing" // Changed to landing page
-          className="flex items-center space-x-3 hover:text-purple-700 transition-colors" // Added hover effect
-        >
-          <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md">
-            <span className="text-purple-800 font-bold text-lg">DF</span>{" "}
-            {/* Changed text color */}
-          </div>
-          <span className="text-xl font-bold hidden sm:inline-block">
-            DriveFix
-          </span>
-        </Link>
+        {/* Logo/Brand and Hamburger */}
+        <div className="flex items-center">
+          {/* Hamburger menu button - visible on mobile */}
+          <button
+            className="md:hidden mr-4 p-1 rounded-md hover:bg-gray-800 focus:outline-none"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? (
+              <XIcon className="h-6 w-6" />
+            ) : (
+              <MenuIcon className="h-6 w-6" />
+            )}
+          </button>
 
-        {/* Desktop Navigation */}
+          <Link
+            to="/landing"
+            className="items-center space-x-3 hover:text-purple-700 transition-colors hidden sm:flex"
+            onClick={handleMobileLinkClick}
+          >
+            <div className="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-md">
+              <span className="text-purple-800 font-bold text-lg">DF</span>
+            </div>
+            <span className="text-xl font-bold">DriveFix</span>
+          </Link>
+        </div>
+
+        {/* Desktop Navigation - hidden on mobile */}
         <div className="hidden md:flex space-x-6">
           <button
             onClick={scrollToTop}
@@ -104,7 +126,7 @@ const User_Navbar = () => {
           </Link>
 
           <Link
-            to="/dashboard" // This should match your route
+            to="/dashboard"
             className="flex items-center hover:text-purple-700 transition-colors"
           >
             <ChartBarIcon className="h-5 w-5 mr-1" /> Dashboard
@@ -126,7 +148,7 @@ const User_Navbar = () => {
                 setNotificationOpen(!notificationOpen);
                 setProfileOpen(false);
               }}
-              className="p-1 rounded-full hover:bg-purple-700 focus:outline-none relative transition-colors" // Changed hover color
+              className="p-1 rounded-full hover:bg-purple-700 focus:outline-none relative transition-colors"
             >
               <BellIcon className="h-6 w-6" />
               <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-purple-600"></span>
@@ -158,7 +180,6 @@ const User_Navbar = () => {
                     <button
                       onClick={() => {
                         alert("No New Notifications");
-                        // Or use a modern toast notification
                       }}
                       className="text-sm text-purple-400 font-medium hover:underline bg-transparent border-none p-0 cursor-pointer focus:outline-none"
                     >
@@ -177,7 +198,7 @@ const User_Navbar = () => {
                 setProfileOpen(!profileOpen);
                 setNotificationOpen(false);
               }}
-              className="flex items-center space-x-1 focus:outline-none hover:text-purple-700 transition-colors" // Changed hover color
+              className="flex items-center space-x-1 focus:outline-none hover:text-purple-700 transition-colors"
             >
               <div className="w-8 h-8 rounded-full bg-gray-800 border-2 border-gray-700 flex items-center justify-center">
                 <UserCircleIcon className="h-5 w-5 text-gray-300" />
@@ -199,7 +220,7 @@ const User_Navbar = () => {
                       </h3>
                       <button
                         onClick={handleEditToggle}
-                        className="text-purple-400 hover:text-purple-700 transition-colors" // Changed hover color
+                        className="text-purple-400 hover:text-purple-700 transition-colors"
                       >
                         <PencilIcon className="h-5 w-5" />
                       </button>
@@ -281,7 +302,7 @@ const User_Navbar = () => {
                               <button
                                 type="button"
                                 onClick={togglePasswordVisibility}
-                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-purple-700" // Changed hover color
+                                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-purple-700"
                               >
                                 {showPassword ? (
                                   <EyeOffIcon className="h-5 w-5" />
@@ -296,8 +317,7 @@ const User_Navbar = () => {
                         </div>
                         {isEditing && (
                           <button className="mt-2 text-xs text-purple-400 hover:text-purple-700">
-                            {" "}
-                            // Changed hover color Change Password
+                            Change Password
                           </button>
                         )}
                       </div>
@@ -333,6 +353,49 @@ const User_Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu - appears below navbar when hamburger is clicked */}
+      {mobileMenuOpen && (
+        <div className="md:hidden bg-gray-900 border-t border-gray-800">
+          <div className="container mx-auto px-4 py-3 flex flex-col space-y-4">
+            <button
+              onClick={() => {
+                scrollToTop();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center hover:text-purple-700 transition-colors py-2"
+            >
+              <HomeIcon className="h-5 w-5 mr-3" /> Home
+            </button>
+
+            <Link
+              to="/mybooking"
+              className="flex items-center hover:text-purple-700 transition-colors py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <CalendarIcon className="h-5 w-5 mr-3" /> My Bookings
+            </Link>
+
+            <Link
+              to="/dashboard"
+              className="flex items-center hover:text-purple-700 transition-colors py-2"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <ChartBarIcon className="h-5 w-5 mr-3" /> Dashboard
+            </Link>
+
+            <button
+              onClick={() => {
+                scrollToFooter();
+                setMobileMenuOpen(false);
+              }}
+              className="flex items-center hover:text-purple-700 transition-colors py-2"
+            >
+              <ChatAltIcon className="h-5 w-5 mr-3" /> Contact Us
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
