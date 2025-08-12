@@ -246,7 +246,7 @@ const Landing = () => {
 
         {/* Background Image */}
         <img
-          src="./images/new3.jpg"
+          src="git add ./images/new3.jpg"
           alt="Car maintenance"
           className="w-full h-full object-cover"
           loading="eager"
