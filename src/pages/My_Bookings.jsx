@@ -21,6 +21,7 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 import Booking_Navbar from "./Booking_Navbar";
+import Booking_Matrix from "./Booking_Matrix";
 
 const My_Bookings = () => {
   // Sample booking data
@@ -325,6 +326,8 @@ const My_Bookings = () => {
             </div>
           </div>
         </div>
+
+        <Booking_Matrix bookings={bookings} />
 
         {/* Bookings Grid */}
         {currentBookings.length > 0 ? (
