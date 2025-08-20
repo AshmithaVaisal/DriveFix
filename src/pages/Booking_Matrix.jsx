@@ -29,7 +29,7 @@ const Booking_Matrix = ({ bookings }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4 mb-6 overflow-x-auto">
-      <h2 className="text-lg font-bold mb-3">Bookings by Top Mechanics</h2>
+      <h2 className="text-lg font-bold mb-3">Book with your favorite mechanics</h2>
       <div className="grid grid-cols-5 gap-1 text-center text-xs">
         {/* Header row */}
         <div className="font-semibold py-2">Technician</div>
